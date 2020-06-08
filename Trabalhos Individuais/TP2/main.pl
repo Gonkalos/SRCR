@@ -31,8 +31,8 @@ trajeto(Origem, Destino, Caminho) :- profundidade(Origem, Destino, [Origem], Cam
 profundidade(Destino, Destino, Visitados, Caminho) :- inverso(Visitados, Caminho).
 
 profundidade(Origem, Destino, Visitados, Caminho) :- adjacente_h(Origem, Prox),
-										             \+ member(Prox, Visitados),
-										             profundidade(Prox, Destino, [Prox|Visitados], Caminho).
+										                                 \+ member(Prox, Visitados),
+										                                 profundidade(Prox, Destino, [Prox|Visitados], Caminho).
 
 adjacente_h(Paragem, Prox) :- adjacente(Paragem, Prox, _, _).
 
@@ -49,8 +49,8 @@ com_operadoras(Origem, Destino, Operadoras, Caminho) :- paragem(Destino, _, _, _
 profundidade2(Destino, Destino, Operadoras, Visitados, Caminho) :- inverso(Visitados, Caminho).
 
 profundidade2(Origem, Destino, Operadoras, Visitados, Caminho) :- adjacente_h2(Origem, Prox, Operadoras),
-										                          \+ member(Prox, Visitados),
-										                          profundidade2(Prox, Destino, Operadoras, [Prox|Visitados], Caminho).
+										                                              \+ member(Prox, Visitados),
+										                                              profundidade2(Prox, Destino, Operadoras, [Prox|Visitados], Caminho).
 
 adjacente_h2(Paragem, Prox, Operadoras) :- paragem(Paragem, _, _, _, _, _, Ope, _, _, _),
                                            pertence(Ope, Operadoras),
@@ -69,8 +69,8 @@ sem_operadoras(Origem, Destino, Operadoras, Caminho) :- paragem(Destino, _, _, _
 profundidade3(Destino, Destino, Operadoras, Visitados, Caminho) :- inverso(Visitados, Caminho).
 
 profundidade3(Origem, Destino, Operadoras, Visitados, Caminho) :- adjacente_h3(Origem, Prox, Operadoras),
-										                          \+ member(Prox, Visitados),
-										                          profundidade3(Prox, Destino, Operadoras, [Prox|Visitados], Caminho).
+										                                              \+ member(Prox, Visitados),
+										                                              profundidade3(Prox, Destino, Operadoras, [Prox|Visitados], Caminho).
 
 adjacente_h3(Paragem, Prox, Operadoras) :- paragem(Paragem, _, _, _, _, _, Ope, _, _, _),
                                            nao(pertence(Ope, Operadoras)),
@@ -94,18 +94,18 @@ profundidade4(Destino, Destino, Visitados, Caminho, Gid, N) :- inverso(Visitados
                                                                write(' carreiras\n').
 
 profundidade4(Origem, Destino, Visitados, Caminho, Gid, N) :- adjacente_h(Origem, Prox),
-										                      \+ member(Prox, Visitados),
+										                                          \+ member(Prox, Visitados),
                                                               carreiras(Origem, Lista),
                                                               length(Lista, N1),
                                                               N1 > N,
-										                      profundidade4(Prox, Destino, [Prox|Visitados], Caminho, Origem, N1).
+										                                          profundidade4(Prox, Destino, [Prox|Visitados], Caminho, Origem, N1).
 
 profundidade4(Origem, Destino, Visitados, Caminho, Gid, N) :- adjacente_h(Origem, Prox),
-										                      \+ member(Prox, Visitados),
+										                                          \+ member(Prox, Visitados),
                                                               carreiras(Origem,Lista),
                                                               length(Lista,N1),
                                                               N1 =< N,
-										                      profundidade4(Prox, Destino, [Prox|Visitados], Caminho, Gid, N).
+										                                          profundidade4(Prox, Destino, [Prox|Visitados], Caminho, Gid, N).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
 
@@ -115,17 +115,17 @@ menos_paragens(Origem, Destino, R) :- findall( (Caminho,N),
                                                ( profundidade(Origem, Destino, [Origem], Caminho), 
                                                  length(Caminho, N) ),
                                                S ),
-                                       menor(S, R),
-                                       write('Trajeto: '),
-                                       escrever(R).
+                                      menor(S, R),
+                                      write('Trajeto: '),
+                                      escrever(R).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
 
 % Escolher o percurso mais rápido usando critério da distância (pesquisa a estrela) 
 
 menor_distancia(Origem, Destino, Caminho/Distancia) :- estima(Origem, Destino, Estima),
-									       	           aestrela([[Origem]/0/Estima], InvCaminho/Distancia/_, Destino),
-										               inverso(InvCaminho, Caminho),
+									       	                             aestrela([[Origem]/0/Estima], InvCaminho/Distancia/_, Destino),
+										                                   inverso(InvCaminho, Caminho),
                                                        write('Trajeto: '),
                                                        escrever(Caminho),
                                                        write('\n'),
@@ -133,27 +133,27 @@ menor_distancia(Origem, Destino, Caminho/Distancia) :- estima(Origem, Destino, E
                                                        write(Distancia).
 
 aestrela(Caminhos, Caminho, Destino) :- obtem_melhor(Caminhos, Caminho),
-	       					            Caminho = [Destino|_]/_/_.
+	       					                      Caminho = [Destino|_]/_/_.
 
 aestrela(Caminhos, SolucaoCaminho, Destino) :- obtem_melhor(Caminhos, MelhorCaminho),
-	       							           seleciona(MelhorCaminho, Caminhos, OutrosCaminhos),
-									           expande_aestrela(MelhorCaminho, ExpCaminhos, Destino),
-									           append(OutrosCaminhos, ExpCaminhos, NovoCaminhos),
-        							           aestrela(NovoCaminhos, SolucaoCaminho, Destino).		
+	       							                         seleciona(MelhorCaminho, Caminhos, OutrosCaminhos),
+									                             expande_aestrela(MelhorCaminho, ExpCaminhos, Destino),
+									                             append(OutrosCaminhos, ExpCaminhos, NovoCaminhos),
+        							                         aestrela(NovoCaminhos, SolucaoCaminho, Destino).		
 
 obtem_melhor([Caminho], Caminho) :- !.
 
 obtem_melhor([Caminho1/Custo1/Est1,_/Custo2/Est2|Caminhos], MelhorCaminho) :- Custo1 + Est1 =< Custo2 + Est2, !,
-																			  obtem_melhor([Caminho1/Custo1/Est1|Caminhos], MelhorCaminho).
+																			                                        obtem_melhor([Caminho1/Custo1/Est1|Caminhos], MelhorCaminho).
 	
 obtem_melhor([_|Caminhos], MelhorCaminho) :- obtem_melhor(Caminhos, MelhorCaminho).
 
 expande_aestrela(Caminho, ExpCaminhos, Destino) :- findall(NovoCaminho, adj(Caminho, NovoCaminho, Destino), ExpCaminhos).
 
 adj([Paragem|Caminho]/Custo/_, [Prox,Paragem|Caminho]/NovoCusto/Est, Destino) :- adjacente(Paragem, Prox, _, PassoCusto),
-                                                                               \+ member(Prox, Caminho),
-																			   NovoCusto is Custo + PassoCusto,
-																			   estima(Prox, Destino, Est).
+                                                                                 \+ member(Prox, Caminho),
+																			                                           NovoCusto is Custo + PassoCusto,
+																			                                           estima(Prox, Destino, Est).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - %
 
@@ -168,8 +168,8 @@ com_publicidade(Origem, Destino, Caminho) :- paragem(Destino, _, _, _, _, Pub, _
 profundidade5(Destino, Destino, Visitados, Caminho) :- inverso(Visitados, Caminho).
 
 profundidade5(Origem, Destino, Visitados, Caminho) :- adjacente_h5(Origem, Prox),
-										              \+ member(Prox, Visitados),
-										              profundidade5(Prox, Destino, [Prox|Visitados], Caminho).
+										                                  \+ member(Prox, Visitados),
+										                                  profundidade5(Prox, Destino, [Prox|Visitados], Caminho).
 
 adjacente_h5(Paragem, Prox) :- paragem(Paragem, _, _, _, _, Pub, _, _, _, _),
                                pertence(Pub, ['Yes']),
@@ -188,8 +188,8 @@ com_abrigo(Origem, Destino, Caminho) :- paragem(Destino, _, _, _, TAb, _, _, _, 
 profundidade6(Destino, Destino, Visitados, Caminho) :- inverso(Visitados, Caminho).
 
 profundidade6(Origem, Destino, Visitados, Caminho) :- adjacente_h6(Origem, Prox),
-										             \+ member(Prox, Visitados),
-										             profundidade6(Prox, Destino, [Prox|Visitados], Caminho).
+										                                  \+ member(Prox, Visitados),
+										                                  profundidade6(Prox, Destino, [Prox|Visitados], Caminho).
 
 adjacente_h6(Paragem, Prox) :- paragem(Paragem, _, _, _, TAb, _, _, _, _, _),
                                nao(pertence(TAb, ['Sem Abrigo'])),
