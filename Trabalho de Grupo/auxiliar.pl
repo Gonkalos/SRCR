@@ -63,7 +63,7 @@ timestamp(Dias,R) :- timestamp(0,T), R1 is Dias * 86400, R is R1 + T.
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-% Extensão do predicado timestamp - valida um valor de um contrato : Valor -> {V,F}
+% Extensão do predicado valor_valido - valida um valor de um contrato : Valor -> {V,F}
 
 valor_valido(N) :- (integer(N)) -> N >= 0 ; N >= 0, Rest is N*(10^2), Rest - integer(Rest) =:= 0.
 
