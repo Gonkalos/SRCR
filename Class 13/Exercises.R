@@ -1,8 +1,8 @@
 library(neuralnet)
 
-setwd("/Users/goncaloalmeida/Documents/Universidade/3º Ano/SRCR/Ficha 13")
+setwd("./")
 
-trainset<-read.csv("Dados Normalizados.csv", header = TRUE, sep = ",", dec = ".")
+trainset<-read.csv("Normalized_Data.csv", header = TRUE, sep = ",", dec = ".")
 head(trainset)
 
 #o ~ significa de pendente

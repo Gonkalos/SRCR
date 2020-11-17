@@ -5,7 +5,7 @@ library(leaps)     # preparação de dados
 
 set.seed(1234567890)
 
-setwd("/Users/goncaloalmeida/Documents/Universidade/3º Ano/SRCR/Ficha 14")
+setwd("./")
 
 dados <- read.csv("creditset.csv")
 
